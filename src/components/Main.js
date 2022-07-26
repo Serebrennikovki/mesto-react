@@ -1,14 +1,15 @@
 //import { queryByDisplayValue } from '@testing-library/react';
 import avatar from '../images/Avatar.png';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '../utils/api';
 import Card from './Card';
+//import React, {useState, useEffect} from 'react';
 
 function Main(props){
-    const [userName, setUserName] = React.useState('Serebrennikov Kostya');
-    const [userDesctiption, setUserDesctiotion] = React.useState('Developer');
-    const [userAvatar, setUserAvatar] = React.useState({avatar});
-    const [cards, setCards] = React.useState([]);
+    const [userName, setUserName] = useState('Serebrennikov Kostya');
+    const [userDesctiption, setUserDesctiotion] = useState('Developer');
+    const [userAvatar, setUserAvatar] = useState({avatar});
+    const [cards, setCards] = useState([]);
 
     React.useEffect(()=>{
         api.getUserInfo()
@@ -54,15 +55,8 @@ function Main(props){
                     {
                         cards.map((card) => {
                             return < Card 
-                                card = {<li key={card._id.toString()} className="card">
-                                            <img className="card__image" src={card.link} alt={card.name} onClick={()=> props.onCardClick(card)}/>
-                                            <button className="card__button-del card__button-del_state_disable" type="button"></button>
-                                            <div className="card__description">
-                                                <h2 className="card__name block">{card.name}</h2>
-                                                <button className="card__button-like" type="button"></button>
-                                                <p className="card__amount-like">{card.likes.length}</p>
-                                            </div>  
-                                        </li>}
+                                card = {card}
+                                onCardClick = {props.onCardClick}
                                 />
                         })
                     }

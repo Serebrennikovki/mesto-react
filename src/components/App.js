@@ -9,42 +9,34 @@ import ImagePopup from './ImagePopup';
 
 
 function App() {
-  const [isEditProfilePopupOpen, setStateOpenEditProfile] = React.useState(false);
-  const [isAddPlacePopupOpen, setStateOpenAddPlace] = React.useState(false);
-  const [isEditAvatarPopupOpen, setStateOpenAvatar] = React.useState(false);
-  const [isImagePopupOpen, setStateOpenImagePopup] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState('');
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({});
   
   function handleEditAvatarClick(){
-    setStateOpenAvatar(true);
+    setIsEditAvatarPopupOpen(true);
 }
 
 function handleEditProfileClick(){
-    setStateOpenEditProfile(true);
+  setIsEditProfilePopupOpen(true);
 }
 function handleAddPlaceClick(){
-    setStateOpenAddPlace(true);
+  setIsAddPlacePopupOpen(true);
 }
 function handleCardClick(card){
   setSelectedCard(card);
-  setStateOpenImagePopup(true);
+  setIsImagePopupOpen(true);
 }
-function closeAllPopups(namePopup){
-  switch(namePopup){
-    case 'addCard':
-      setStateOpenAddPlace(false);
-      break;
-    case 'editPtofile':
-      setStateOpenEditProfile(false);
-      break;
-    case 'changeAvatar':
-      setStateOpenAvatar(false);
-      break;
-    default:
-      setStateOpenImagePopup(false);
-      break;
+function closeAllPopups(){
+  setIsAddPlacePopupOpen(false);
+  setIsEditProfilePopupOpen(false);
+  setIsEditAvatarPopupOpen(false);
+  setIsImagePopupOpen(false);
   }
-}
+
+
 
   return (
     <body className="page">
@@ -58,25 +50,21 @@ function closeAllPopups(namePopup){
           onClose = {closeAllPopups}
           isOpen = {isEditProfilePopupOpen}
           name="editPtofile"
-          title="Редактировать профиль">{
-            <>
-            <div className="popup__container">
+          title="Редактировать профиль">
+          <div className="popup__container">
             <input required id="nameInput" className="popup__input-text popup__input-text_field_name" name="name" placeholder="Жак-Ив Кусто" type="text" minLength="2" maxLength="40" />
             <span className="popup__input-error" id="nameInput-error"></span>
-        </div>
-        <div className="popup__container">
+          </div>
+          <div className="popup__container">
             <input required id="jobInput" className="popup__input-text popup__input-text_field_job" name="about" placeholder="Исследователь океана" type="text" minLength="2" maxLength="200" />
             <span className="popup__input-error" id="jobInput-error"></span>
-        </div>
-        </>
-          }
+          </div>
         </PopupWithForm>
         <PopupWithForm
           onClose = {closeAllPopups}
           isOpen = {isAddPlacePopupOpen}
           name="addCard"
-          title="Добавить место">{
-          <>
+          title="Добавить место">
             <div className = "popup__container">
                 <input required id="nameCardInput" className="popup__input-text popup__input-text_field_name" name="name" placeholder="Название" type="text" minLength="2" maxLength="30"/> 
                 <span className="popup__input-error" id="nameCardInput-error"></span>
@@ -85,8 +73,6 @@ function closeAllPopups(namePopup){
                 <input required id="URLInput" className="popup__input-text popup__input-text_field_job" name='link' placeholder="Ссылка на картинку" type="url"/>
                 <span className="popup__input-error" id="URLInput-error"></span>
             </div>
-        </>
-          }
         </PopupWithForm>
         <PopupWithForm
           name="confirmation"
@@ -95,11 +81,11 @@ function closeAllPopups(namePopup){
           onClose = {closeAllPopups}
           isOpen = {isEditAvatarPopupOpen}
           name="changeAvatar"
-          title="Обновить аватар">{
+          title="Обновить аватар">
             <div className ="popup__container">
               <input required id="URLInputAvatar" className="popup__input-text popup__input-text_field_job" name="avatar" placeholder="Ссылка на картинку" type="url"/>
               <span className="popup__input-error" id="URLInputAvatar-error"></span>
-            </div>}
+            </div>
         </PopupWithForm>
         <ImagePopup
           card = {selectedCard}
