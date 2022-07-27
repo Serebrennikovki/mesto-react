@@ -3,7 +3,7 @@ function Card(props){
         props.onCardClick(props.card);
       } 
     return (
-    <li key={props.card._id.toString()} className="card">
+    <li className="card">
         <img className="card__image" src={props.card.link} alt={props.card.name} onClick={handleClick}/>
         <button className="card__button-del card__button-del_state_disable" type="button"></button>
         <div className="card__description">
