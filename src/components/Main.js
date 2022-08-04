@@ -1,49 +1,25 @@
 //import { queryByDisplayValue } from '@testing-library/react';
-import avatar from '../images/Avatar.png';
-import React, { useEffect, useState } from 'react';
-import api from '../utils/api';
+import React, {  useContext } from 'react';
 import Card from './Card';
-//import React, {useState, useEffect} from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentCardsContext } from '../contexts/CurrentCardsContext';
 
 function Main(props){
-    const [userName, setUserName] = useState('Serebrennikov Kostya');
-    const [userDesctiption, setUserDesctiotion] = useState('Developer');
-    const [userAvatar, setUserAvatar] = useState({avatar});
-    const [cards, setCards] = useState([]);
+    const dataUser = useContext(CurrentUserContext);
+    const dataCards = useContext(CurrentCardsContext);
 
-    React.useEffect(()=>{
-        api.getUserInfo()
-            .then((response)=>{
-                setUserName(response.name);
-                setUserDesctiotion(response.about);
-                setUserAvatar(response.avatar);
-            })
-            .catch((error)=>{
-                console.log(error);
-                })   
-    },[])
-    React.useEffect(()=>{
-        api.getInitialCards()
-            .then((response)=>{
-                setCards(response);
-                })
-            .catch((error)=>{
-                console.log(error);
-                })
-                
-            },[])  
 
     return (
         <main className="page__content">
             <section className="profile"> 
                 <div className="profile__author">
                     <button className="profile__changeAvatar-button" onClick={props.onEditAvatar} type="button">
-                        <img className="profile__avatar" src={userAvatar} alt="портрет"/>
+                        <img className="profile__avatar" src={dataUser.avatar} alt="портрет"/>
                     </button>
                     <div className="profile__info">
                         <div className="profile__text">
-                            <h1 className="profile__name block">{userName}</h1>
-                            <p className="profile__job block">{userDesctiption}</p>
+                            <h1 className="profile__name block">{dataUser.name}</h1>
+                            <p className="profile__job block">{dataUser.about}</p>
                         </div>
                         <button className="profile__change-button" onClick={props.onEditProfile} type="button"></button>  
                     </div>
@@ -53,7 +29,7 @@ function Main(props){
             <section className="cards">
                 <ul className="cards__table">
                     {
-                        cards.map((card) => {
+                        dataCards.map((card) => {
                             return < Card
                             key = {card._id}
                             card = {card}
