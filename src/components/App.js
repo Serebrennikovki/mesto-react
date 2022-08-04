@@ -5,6 +5,9 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
+import api from '../utils/api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentCardsContext } from '../contexts/CurrentCardsContext';
 
 
 
@@ -14,6 +17,28 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(()=>{
+    api.getUserInfo()
+      .then((response)=>{
+        setCurrentUser(response);
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+  },[])
+
+  React.useEffect(()=>{
+    api.getInitialCards()
+      .then((resp)=>{
+        setCards(resp);
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+  })
   
   function handleEditAvatarClick(){
     setIsEditAvatarPopupOpen(true);
@@ -39,7 +64,9 @@ function closeAllPopups(){
 
 
   return (
-    <body className="page">
+  <CurrentUserContext.Provider value={currentUser}>
+  <CurrentCardsContext.Provider value={cards}>
+  <body className="page">
         <Header/>
         <Main
         onCardClick = {handleCardClick}
@@ -94,6 +121,10 @@ function closeAllPopups(){
         />
         <Footer/>
     </body>
+
+  </CurrentCardsContext.Provider>
+  </CurrentUserContext.Provider>
+   
   );
 }
 
