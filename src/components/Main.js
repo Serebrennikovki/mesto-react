@@ -8,7 +8,6 @@ function Main(props){
     const dataUser = useContext(CurrentUserContext);
     const dataCards = useContext(CurrentCardsContext);
 
-
     return (
         <main className="page__content">
             <section className="profile"> 
@@ -34,6 +33,8 @@ function Main(props){
                             key = {card._id}
                             card = {card}
                             onCardClick = {props.onCardClick}
+                            onCardLike={props.onCardLike}
+                            onCardDelete={props.onCardDelete}
                                 />
                         })
                     }
