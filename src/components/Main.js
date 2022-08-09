@@ -2,11 +2,9 @@
 import React, {  useContext } from 'react';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { CurrentCardsContext } from '../contexts/CurrentCardsContext';
 
 function Main(props){
     const dataUser = useContext(CurrentUserContext);
-    const dataCards = useContext(CurrentCardsContext);
 
     return (
         <main className="page__content">
@@ -28,7 +26,7 @@ function Main(props){
             <section className="cards">
                 <ul className="cards__table">
                     {
-                        dataCards.map((card) => {
+                        props.cards.map((card) => {
                             return < Card
                             key = {card._id}
                             card = {card}
