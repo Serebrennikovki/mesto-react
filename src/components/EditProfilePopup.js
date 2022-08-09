@@ -10,7 +10,7 @@ function EditProfilePopup({onClose, isOpen, onUpdateUser}){
     useEffect(()=>{
       setNameProfile(currentUser.name);
       setDescriptionProfile(currentUser.about);
-    },[currentUser]);
+    },[currentUser,isOpen]);
 
     function handleChangeNameProfile(e){
       setNameProfile(e.target.value)
@@ -36,11 +36,11 @@ function EditProfilePopup({onClose, isOpen, onUpdateUser}){
           name="editPtofile"
           title="Редактировать профиль" >
           <div className="popup__container">
-            <input required id="nameInput" className="popup__input-text popup__input-text_field_name" name="name" placeholder="Жак-Ив Кусто" type="text" minLength="2" maxLength="40" value={nameProfile} onChange={handleChangeNameProfile}/>
+            <input required id="nameInput" className="popup__input-text popup__input-text_field_name" name="name" placeholder="Жак-Ив Кусто" type="text" minLength="2" maxLength="40" value={nameProfile || ""} onChange={handleChangeNameProfile}/>
             <span className="popup__input-error" id="nameInput-error"></span>
           </div>
           <div className="popup__container">
-            <input required id="jobInput" className="popup__input-text popup__input-text_field_job" name="about" placeholder="Исследователь океана" type="text" minLength="2" maxLength="200" value={descriptionProfile} onChange={handleChangeDescriptionHandle} />
+            <input required id="jobInput" className="popup__input-text popup__input-text_field_job" name="about" placeholder="Исследователь океана" type="text" minLength="2" maxLength="200" value={descriptionProfile || ""} onChange={handleChangeDescriptionHandle} />
             <span className="popup__input-error" id="jobInput-error"></span>
           </div>
         </PopupWithForm> 

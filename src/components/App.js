@@ -27,9 +27,7 @@ function App() {
       .then((response)=>{
         setCurrentUser(response);
       })
-      .catch((error)=>{
-        console.log(error);
-      })
+      .catch((error)=>{console.log(error);})
   },[]);
 
   React.useEffect(()=>{
@@ -37,9 +35,7 @@ function App() {
       .then((resp)=>{
         setCards(resp);
       })
-      .catch((error)=>{
-        console.log(error);
-      })
+      .catch((error)=>{console.log(error);})
   }, []);
 
   function handleCardLike(card){
@@ -48,6 +44,7 @@ function App() {
       .then((newCard)=>{
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
       })
+      .catch((error)=>{console.log(error);})
     }
 
   function handleCardDelete(card){
@@ -59,6 +56,7 @@ function App() {
           }
         }))
       })
+      .catch((error)=>{console.log(error);})
   }
 
   function handleUpdateUser(data){
@@ -68,6 +66,7 @@ function App() {
         closeAllPopups();
       }   
     )
+    .catch((error)=>{console.log(error);})
   }
 
   function handleUpdateAvatar(link){
@@ -76,6 +75,7 @@ function App() {
         setCurrentUser(res);
         closeAllPopups();
       })
+      .catch((error)=>{console.log(error);})
   }
 
   function handleAddPlace(data){
@@ -84,6 +84,7 @@ function App() {
         setCards([res, ...cards]);
         closeAllPopups();
       })
+      .catch((error)=>{console.log(error);})
   }
 
 
