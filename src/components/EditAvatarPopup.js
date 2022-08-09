@@ -1,20 +1,15 @@
 import { render } from "@testing-library/react";
-import { useState,useContext } from "react";
+import { useRef,useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}){
     const currentUser = useContext(CurrentUserContext);
-    const [avatarLink, setAvatarLink] = useState(currentUser.avatar);
-
-    function handleChangeAvatar(e){
-        setAvatarLink(e.target.value);
-    }
+    const avatarLinkRef = useRef(currentUser.avatar);
 
     function handleSubmit(e){
         e.preventDefault();
-        onUpdateAvatar(avatarLink);
-        setAvatarLink('');
+        onUpdateAvatar(avatarLinkRef.current.value);
     }
 
     return (
@@ -25,7 +20,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}){
           name="changeAvatar"  
           title="Обновить аватар">
             <div className ="popup__container">
-              <input required id="URLInputAvatar" className="popup__input-text popup__input-text_field_job" name="avatar" placeholder="Ссылка на картинку" type="url" onChange={handleChangeAvatar} value={avatarLink}/>
+              <input required id="URLInputAvatar" className="popup__input-text popup__input-text_field_job" name="avatar" placeholder="Ссылка на картинку" type="url" ref={avatarLinkRef}/>
               <span className="popup__input-error" id="URLInputAvatar-error"></span>
             </div>
         </PopupWithForm>

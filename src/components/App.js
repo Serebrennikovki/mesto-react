@@ -7,9 +7,9 @@ import Main from './Main';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { CurrentCardsContext } from '../contexts/CurrentCardsContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 
 
 
@@ -78,6 +78,14 @@ function App() {
       })
   }
 
+  function handleAddPlace(data){
+    api.addCard(data)
+      .then((res)=>{
+        setCards([res, ...cards]);
+        closeAllPopups();
+      })
+  }
+
 
   
   function handleEditAvatarClick(){
@@ -105,10 +113,10 @@ function closeAllPopups(){
 
   return (
   <CurrentUserContext.Provider value={currentUser}>
-  <CurrentCardsContext.Provider value={cards}>
   <body className="page">
         <Header/>
         <Main
+        cards={cards}
         onCardClick = {handleCardClick}
         onCardLike = {handleCardLike}
         onCardDelete = {handleCardDelete}
@@ -117,24 +125,10 @@ function closeAllPopups(){
         onEditAvatar = {handleEditAvatarClick}/>
         <EditProfilePopup onClose = {closeAllPopups} isOpen = {isEditProfilePopupOpen} onUpdateUser = {handleUpdateUser}/>
         <EditAvatarPopup onClose={closeAllPopups} isOpen = {isEditAvatarPopupOpen} onUpdateAvatar = {handleUpdateAvatar}/>
-        <PopupWithForm
-          onClose = {closeAllPopups}
-          isOpen = {isAddPlacePopupOpen}
-          name="addCard"
-          title="Добавить место">
-            <div className = "popup__container">
-                <input required id="nameCardInput" className="popup__input-text popup__input-text_field_name" name="name" placeholder="Название" type="text" minLength="2" maxLength="30"/> 
-                <span className="popup__input-error" id="nameCardInput-error"></span>
-            </div>
-            <div className ="popup__container">
-                <input required id="URLInput" className="popup__input-text popup__input-text_field_job" name='link' placeholder="Ссылка на картинку" type="url"/>
-                <span className="popup__input-error" id="URLInput-error"></span>
-            </div>
-        </PopupWithForm>
+        <AddPlacePopup onClose={closeAllPopups} isOpen = {isAddPlacePopupOpen} onAddPlace = {handleAddPlace} />
         <PopupWithForm
           name="confirmation"
           title="Вы уверены?"/>
-        
         <ImagePopup
           card = {selectedCard}
           isOpen = {isImagePopupOpen}
@@ -142,8 +136,6 @@ function closeAllPopups(){
         />
         <Footer/>
     </body>
-
-  </CurrentCardsContext.Provider>
   </CurrentUserContext.Provider>
    
   );
