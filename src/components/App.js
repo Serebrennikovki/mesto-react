@@ -114,7 +114,7 @@ function closeAllPopups(){
 
   return (
   <CurrentUserContext.Provider value={currentUser}>
-  <body className="page">
+    <div className="page">
         <Header/>
         <Main
         cards={cards}
@@ -136,7 +136,7 @@ function closeAllPopups(){
           onClose = {closeAllPopups}
         />
         <Footer/>
-    </body>
+    </div>
   </CurrentUserContext.Provider>
    
   );
